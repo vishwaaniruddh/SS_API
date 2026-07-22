@@ -1,0 +1,12 @@
+<?php
+namespace API\Models;
+
+class CartModel {
+    // ... existing code ...
+
+    public function removeFromCart($cartId) {
+        $cartId = (int)$cartId;
+        mysqli_query($this->db, "DELETE FROM cart WHERE cart_id = $cartId");
+        return true;
+    }
+}

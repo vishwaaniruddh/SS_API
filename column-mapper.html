@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Column Mapper - Legacy Database Sync</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #C9A96E;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            color: #999;
+            font-size: 16px;
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .section h2 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #C9A96E;
+        }
+        .instructions {
+            background: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+        .instructions h3 {
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+        .instructions ol {
+            margin-left: 20px;
+            color: #1e3a8a;
+        }
+        .instructions li {
+            margin: 8px 0;
+        }
+        .table-group {
+            background: #fafafa;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .table-group h3 {
+            color: #C9A96E;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e5e5e5;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.3s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #C9A96E;
+        }
+        .example {
+            background: #fffbeb;
+            border: 1px solid #fbbf24;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+        .example strong {
+            color: #92400e;
+        }
+        .example code {
+            background: #fef3c7;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: #78350f;
+        }
+        .btn {
+            background: linear-gradient(135deg, #C9A96E 0%, #d4b87a 100%);
+            color: #1a1a1a;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(201, 169, 110, 0.4);
+        }
+        .output {
+            background: #0a0a0a;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            max-height: 500px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 20px;
+        }
+        .output.show {
+            display: block;
+        }
+        .alert {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 15px;
+            border-radius: 6px;
+            color: #991b1b;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 Column Mapper Tool</h1>
+            <p>Map your legacy database columns to generate correct sync code</p>
+        </div>
+        
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 How to Use This Tool</h3>
+                <ol>
+                    <li>Open <strong>http://localhost/ss/API/scan-legacy-tables-html.php</strong> in another tab</li>
+                    <li>Copy the column names from each table</li>
+                    <li>Paste them into the corresponding fields below</li>
+                    <li>Click "Generate Mapping" to see what needs to be updated</li>
+                    <li>Share the output with your developer</li>
+                </ol>
+            </div>
+
+            <div class="alert">
+                <strong>⚠️ Important:</strong> Paste ONLY the column names, one per line. Example:<br>
+                <code>id<br>bill_no<br>customer_name<br>email<br>phone</code>
+            </div>
+
+            <form id="mapperForm">
+                <div class="table-group">
+                    <h3>📋 Table: approval (Purchase Orders)</h3>
+                    <label for="approval">Paste column names from 'approval' table:</label>
+                    <textarea id="approval" name="approval" placeholder="id&#10;bill_id&#10;customer_name&#10;customer_email&#10;..."></textarea>
+                    <div class="example">
+                        <strong>Expected columns:</strong> bill_id, customer_name, customer_email, customer_phone, customer_address, total_amount, payment_status, razorpay_order_id, razorpay_payment_id, created_at, status
+                    </div>
+                </div>
+
+                <div class="table-group">
+                    <h3>📋 Table: approval_detail (Purchase Items)</h3>
+                    <label for="approval_detail">Paste column names from 'approval_detail' table:</label>
+                    <textarea id="approval_detail" name="approval_detail" placeholder="id&#10;approval_id&#10;bill_id&#10;item_id&#10;..."></textarea>
+                    <div class="example">
+                        <strong>Expected columns:</strong> approval_id, bill_id, item_id, product_name, qty, price, total, product_type
+                    </div>
+                </div>
+
+                <div class="table-group">
+                    <h3>📋 Table: phppos_rent (Rental Orders)</h3>
+                    <label for="phppos_rent">Paste column names from 'phppos_rent' table:</label>
+                    <textarea id="phppos_rent" name="phppos_rent" placeholder="id&#10;bill_id&#10;customer_name&#10;customer_email&#10;..."></textarea>
+                    <div class="example">
+                        <strong>Expected columns:</strong> bill_id, customer_name, customer_email, customer_phone, customer_address, pick_date, delivery_date, days, total_amount, payment_status, razorpay_order_id, razorpay_payment_id, created_at, booking_status
+                    </div>
+                </div>
+
+                <div class="table-group">
+                    <h3>📋 Table: order_detail (Rental Items)</h3>
+                    <label for="order_detail">Paste column names from 'order_detail' table:</label>
+                    <textarea id="order_detail" name="order_detail" placeholder="id&#10;bill_id&#10;item_id&#10;product_name&#10;..."></textarea>
+                    <div class="example">
+                        <strong>Expected columns:</strong> bill_id, item_id, product_name, qty, price, total, product_type, pick_date, delivery_date, days
+                    </div>
+                </div>
+
+                <div class="table-group">
+                    <h3>📋 Table: phppos_items (Inventory)</h3>
+                    <label for="phppos_items">Paste column names from 'phppos_items' table:</label>
+                    <textarea id="phppos_items" name="phppos_items" placeholder="id&#10;item_id&#10;name&#10;quantity&#10;..."></textarea>
+                    <div class="example">
+                        <strong>Most Important:</strong> Find the column that stores SKU/Item Code (might be <code>item_id</code>, <code>sku</code>, <code>product_code</code>, etc.) and the <code>quantity</code> column
+                    </div>
+                </div>
+
+                <button type="submit" class="btn">🔍 Analyze Columns</button>
+            </form>
+
+            <div id="output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('mapperForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const output = document.getElementById('output');
+            let result = '=== COLUMN MAPPING ANALYSIS ===\n\n';
+            
+            const tables = {
+                'approval': ['bill_id', 'customer_name', 'customer_email', 'customer_phone', 'customer_address', 'total_amount', 'payment_status', 'razorpay_order_id', 'razorpay_payment_id', 'created_at', 'status'],
+                'approval_detail': ['approval_id', 'bill_id', 'item_id', 'product_name', 'qty', 'price', 'total', 'product_type'],
+                'phppos_rent': ['bill_id', 'customer_name', 'customer_email', 'customer_phone', 'customer_address', 'pick_date', 'delivery_date', 'days', 'total_amount', 'payment_status', 'razorpay_order_id', 'razorpay_payment_id', 'created_at', 'booking_status'],
+                'order_detail': ['bill_id', 'item_id', 'product_name', 'qty', 'price', 'total', 'product_type', 'pick_date', 'delivery_date', 'days'],
+                'phppos_items': ['item_id', 'quantity']
+            };
+            
+            for (const [tableName, expectedCols] of Object.entries(tables)) {
+                const textarea = document.getElementById(tableName);
+                const actualCols = textarea.value.split('\n').map(s => s.trim()).filter(s => s);
+                
+                result += `\n========================================\n`;
+                result += `TABLE: ${tableName}\n`;
+                result += `========================================\n\n`;
+                
+                if (actualCols.length === 0) {
+                    result += `❌ NO COLUMNS PROVIDED\n`;
+                    continue;
+                }
+                
+                result += `Actual columns found: ${actualCols.length}\n`;
+                result += `Columns: ${actualCols.join(', ')}\n\n`;
+                
+                result += `Mapping check:\n`;
+                for (const expected of expectedCols) {
+                    const found = actualCols.find(col => col.toLowerCase() === expected.toLowerCase());
+                    if (found) {
+                        result += `  ✅ ${expected} → ${found}\n`;
+                    } else {
+                        // Try to find similar
+                        const similar = actualCols.find(col => 
+                            col.toLowerCase().includes(expected.split('_')[0]) ||
+                            expected.toLowerCase().includes(col.split('_')[0])
+                        );
+                        if (similar) {
+                            result += `  ⚠️  ${expected} → MAYBE: ${similar}?\n`;
+                        } else {
+                            result += `  ❌ ${expected} → NOT FOUND\n`;
+                        }
+                    }
+                }
+            }
+            
+            result += `\n\n========================================\n`;
+            result += `NEXT STEPS\n`;
+            result += `========================================\n`;
+            result += `1. Review the mapping above\n`;
+            result += `2. Copy this entire output\n`;
+            result += `3. Share it with your developer\n`;
+            result += `4. Developer will update sync-legacy-database.php\n`;
+            
+            output.textContent = result;
+            output.classList.add('show');
+            output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+    </script>
+</body>
+</html>

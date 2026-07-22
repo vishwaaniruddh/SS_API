@@ -1,0 +1,243 @@
+2026-07-08 20:40:08 [ERROR] Call to undefined method PhpOffice\PhpSpreadsheet\Worksheet\Worksheet::getCellByColumnAndRow() in C:\xampp\htdocs\ss\new_admin\scratch\update_prices_from_excel.php on line 77
+#0 {main}
+
+2026-07-08 20:53:19 [ERROR] mysqli_stmt_bind_param(): Argument #1 ($statement) must be of type mysqli_stmt, string given in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 931
+#0 [internal function]: mysqli_stmt_bind_param('siis', 'Samyakk', 22, 0, 'FM4111-1')
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(931): call_user_func_array('mysqli_stmt_bin...', Array)
+#2 C:\xampp\htdocs\ss\new_admin\index.php(43): Controllers\ProductController->processBulkUpdate()
+#3 {main}
+
+2026-07-08 20:53:31 [ERROR] mysqli_stmt_bind_param(): Argument #1 ($statement) must be of type mysqli_stmt, string given in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 931
+#0 [internal function]: mysqli_stmt_bind_param('siis', 'Samyakk', 22, 0, 'FM4111-1')
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(931): call_user_func_array('mysqli_stmt_bin...', Array)
+#2 C:\xampp\htdocs\ss\new_admin\index.php(43): Controllers\ProductController->processBulkUpdate()
+#3 {main}
+
+2026-07-09 12:28:58 [ERROR] Access denied for user 'u464193275_srishrinjuser'@'localhost' (using password: YES) in C:\xampp\htdocs\ss\API\config.php on line 73
+#0 C:\xampp\htdocs\ss\API\config.php(73): mysqli_connect('localhost', 'u464193275_sris...', Object(SensitiveParameterValue), 'u464193275_sris...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(12): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\scratch\create_activity_logs_table.php(8): Core\Database::getConnection('con')
+#3 {main}
+
+2026-07-10 20:10:57 [ERROR] Access denied for user 'u464193275_srishrinjuser'@'localhost' (using password: YES) in C:\xampp\htdocs\ss\API\config.php on line 73
+#0 C:\xampp\htdocs\ss\API\config.php(73): mysqli_connect('localhost', 'u464193275_sris...', Object(SensitiveParameterValue), 'u464193275_sris...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(12): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\scratch\describe_garment_product.php(11): Core\Database::getConnection('con')
+#3 {main}
+
+2026-07-10 20:20:52 [ERROR] Access denied for user 'u464193275_srishrinjuser'@'localhost' (using password: YES) in C:\xampp\htdocs\ss\API\config.php on line 73
+#0 C:\xampp\htdocs\ss\API\config.php(73): mysqli_connect('localhost', 'u464193275_sris...', Object(SensitiveParameterValue), 'u464193275_sris...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(12): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\xampp\htdocs\ss\new_admin\scratch\verify_update.php(11): Core\Model->__construct()
+#4 {main}
+
+2026-07-11 14:38:23 [ERROR] Access denied for user 'u464193275_srishrinjuser'@'localhost' (using password: YES) in C:\xampp\htdocs\ss\API\config.php on line 73
+#0 C:\xampp\htdocs\ss\API\config.php(73): mysqli_connect('localhost', 'u464193275_sris...', Object(SensitiveParameterValue), 'u464193275_sris...')
+#1 C:\xampp\htdocs\ss\API\Core\Database.php(12): include_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\API\Core\Model.php(10): API\Core\Database::getConnection('con')
+#3 C:\xampp\htdocs\ss\API\Models\ProductModel.php(11): API\Core\Model->__construct()
+#4 C:\xampp\htdocs\ss\API\Services\ProductService.php(10): API\Models\ProductModel->__construct()
+#5 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(11): API\Services\ProductService->__construct()
+#6 C:\xampp\htdocs\ss\API\v1\products.php(10): API\Controllers\ProductController->__construct()
+#7 C:\Users\aniru\.gemini\antigravity-ide\brain\d561102b-12ba-4f83-8f06-349ef0e389d9\scratch\test_api.php(4): require('C:\\xampp\\htdocs...')
+#8 {main}
+
+2026-07-11 20:29:55 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 227
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(227): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 227)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->aiSuggestDescription()
+#2 {main}
+
+2026-07-11 20:29:59 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 124
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(124): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 124)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->aiSuggestNames()
+#2 {main}
+
+2026-07-11 20:30:53 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 227
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(227): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 227)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->aiSuggestDescription()
+#2 {main}
+
+2026-07-11 20:31:03 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 227
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(227): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 227)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->aiSuggestDescription()
+#2 {main}
+
+2026-07-11 20:31:24 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 227
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(227): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 227)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->aiSuggestDescription()
+#2 {main}
+
+2026-07-11 20:31:36 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 124
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(124): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 124)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->aiSuggestNames()
+#2 {main}
+
+2026-07-11 22:41:53 [ERROR] Unknown column 'description' in 'field list' in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 272
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(272): mysqli_prepare(Object(mysqli), 'UPDATE product ...')
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveProductField()
+#2 {main}
+
+2026-07-12 00:11:00 [ERROR] Constant RAZORPAY_KEY_ID already defined, this will be an error in PHP 9 in C:\xampp\htdocs\ss\API\config.php on line 12
+#0 C:\xampp\htdocs\ss\API\config.php(12): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(2, 'Constant RAZORP...', 'C:\\xampp\\htdocs...', 12)
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(12): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ReportController.php(10): Core\Database::getConnection('woo')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ReportController->sku()
+#4 {main}
+
+2026-07-12 00:39:31 [ERROR] Table 'u464193275_srishringarr.analytics_events' doesn't exist in C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php on line 22
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php(22): mysqli_query(Object(mysqli), 'SELECT COUNT(DI...')
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AnalyticsController->index()
+#2 {main}
+
+2026-07-12 00:39:45 [ERROR] Table 'u464193275_srishringarr.analytics_events' doesn't exist in C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php on line 22
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php(22): mysqli_query(Object(mysqli), 'SELECT COUNT(DI...')
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AnalyticsController->index()
+#2 {main}
+
+2026-07-12 00:39:46 [ERROR] Table 'u464193275_srishringarr.analytics_events' doesn't exist in C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php on line 22
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php(22): mysqli_query(Object(mysqli), 'SELECT COUNT(DI...')
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AnalyticsController->index()
+#2 {main}
+
+2026-07-12 00:41:34 [ERROR] number_format(): Argument #1 ($num) must be of type int|float, string given in C:\xampp\htdocs\ss\new_admin\Views\products\view.php on line 80
+#0 C:\xampp\htdocs\ss\new_admin\Views\products\view.php(80): number_format('', 2)
+#1 C:\xampp\htdocs\ss\new_admin\Core\Controller.php(7): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(36): Core\Controller->view('products/view', Array)
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->view_details()
+#4 {main}
+
+2026-07-12 00:58:04 [ERROR] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php on line 104
+#0 [internal function]: Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'json_decode(): ...', 'C:\\xampp\\htdocs...', 104)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php(104): json_decode(NULL, true)
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AnalyticsController->index()
+#3 {main}
+
+2026-07-12 00:58:07 [ERROR] json_decode(): Passing null to parameter #1 ($json) of type string is deprecated in C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php on line 104
+#0 [internal function]: Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'json_decode(): ...', 'C:\\xampp\\htdocs...', 104)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AnalyticsController.php(104): json_decode(NULL, true)
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AnalyticsController->index()
+#3 {main}
+
+2026-07-12 03:30:05 [ERROR] Access denied for user 'u464193275_srishrinjuser'@'localhost' (using password: YES) in C:\xampp\htdocs\ss\API\config.php on line 73
+#0 C:\xampp\htdocs\ss\API\config.php(73): mysqli_connect('localhost', 'u464193275_sris...', Object(SensitiveParameterValue), 'u464193275_sris...')
+#1 C:\xampp\htdocs\ss\client\public\redirect-resolver.php(22): require_once('C:\\xampp\\htdocs...')
+#2 C:\Users\aniru\.gemini\antigravity-ide\brain\d561102b-12ba-4f83-8f06-349ef0e389d9\scratch\test_redirect.php(4): include('C:\\xampp\\htdocs...')
+#3 {main}
+
+2026-07-14 13:26:58 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\scratch\test_ai_suggestions.php on line 112
+#0 C:\xampp\htdocs\ss\new_admin\scratch\test_ai_suggestions.php(112): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 112)
+#1 {main}
+
+2026-07-15 16:22:23 [ERROR] Access denied for user 'u464193275_srishrinjuser'@'localhost' (using password: YES) in C:\xampp\htdocs\ss\API\config.php on line 73
+#0 C:\xampp\htdocs\ss\API\config.php(73): mysqli_connect('localhost', 'u464193275_sris...', Object(SensitiveParameterValue), 'u464193275_sris...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(12): include('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\xampp\htdocs\ss\new_admin\scratch\test_stock_status.php(14): Core\Model->__construct()
+#4 {main}
+
+2026-07-15 16:32:20 [ERROR] Unknown column 'product_image' in 'field list' in C:\xampp\htdocs\ss\client\dist\404-handler.php on line 100
+#0 C:\xampp\htdocs\ss\client\dist\404-handler.php(100): mysqli_query(Object(mysqli), 'SELECT gproduct...')
+#1 C:\xampp\htdocs\ss\new_admin\scratch\test_og_tags.php(10): include('C:\\xampp\\htdocs...')
+#2 {main}
+
+2026-07-20 23:55:46 [ERROR] require(C:\xampp\htdocs\ss\new_admin\Controllers/../Views/ai_playground/index.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php on line 9
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(9): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(2, 'require(C:\\xamp...', 'C:\\xampp\\htdocs...', 9)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(9): require()
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiPlaygroundController->index()
+#3 {main}
+
+2026-07-20 23:56:17 [ERROR] require(C:\xampp\htdocs\ss\new_admin\Controllers/../Views/ai_playground/index.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php on line 9
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(9): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(2, 'require(C:\\xamp...', 'C:\\xampp\\htdocs...', 9)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(9): require()
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiPlaygroundController->index()
+#3 {main}
+
+2026-07-20 23:56:18 [ERROR] require(C:\xampp\htdocs\ss\new_admin\Controllers/../Views/ai_playground/index.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php on line 9
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(9): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(2, 'require(C:\\xamp...', 'C:\\xampp\\htdocs...', 9)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(9): require()
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiPlaygroundController->index()
+#3 {main}
+
+2026-07-21 01:09:18 [ERROR] Function curl_close() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php on line 287
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiPlaygroundController.php(287): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:23}(8192, 'Function curl_c...', 'C:\\xampp\\htdocs...', 287)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiPlaygroundController->generateVideoStart()
+#2 {main}
+
+2026-07-21 20:27:23 [ERROR] include(C:\xampp\htdocs\ss\new_admin\Controllers/../Views/ai_models/index.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php on line 7
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php(7): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(2, 'include(C:\\xamp...', 'C:\\xampp\\htdocs...', 7)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php(7): include()
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiModelsController->index()
+#3 {main}
+
+2026-07-21 20:27:27 [ERROR] include(C:\xampp\htdocs\ss\new_admin\Controllers/../Views/ai_models/index.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php on line 7
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php(7): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(2, 'include(C:\\xamp...', 'C:\\xampp\\htdocs...', 7)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php(7): include()
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiModelsController->index()
+#3 {main}
+
+2026-07-21 20:27:29 [ERROR] include(C:\xampp\htdocs\ss\new_admin\Controllers/../Views/ai_models/index.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php on line 7
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php(7): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(2, 'include(C:\\xamp...', 'C:\\xampp\\htdocs...', 7)
+#1 C:\xampp\htdocs\ss\new_admin\Controllers\AiModelsController.php(7): include()
+#2 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AiModelsController->index()
+#3 {main}
+
+2026-07-21 20:29:09 [ERROR] Function imagedestroy() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\AimodelsController.php on line 61
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AimodelsController.php(61): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(8192, 'Function imaged...', 'C:\\xampp\\htdocs...', 61)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AimodelsController->upload()
+#2 {main}
+
+2026-07-21 20:29:20 [ERROR] Function imagedestroy() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\Controllers\AimodelsController.php on line 61
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\AimodelsController.php(61): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(8192, 'Function imaged...', 'C:\\xampp\\htdocs...', 61)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\AimodelsController->upload()
+#2 {main}
+
+2026-07-21 20:41:21 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
+2026-07-21 20:41:29 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
+2026-07-21 20:41:34 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
+2026-07-21 20:41:36 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
+2026-07-21 20:41:37 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
+2026-07-21 20:41:40 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
+2026-07-21 20:42:05 [ERROR] MySQL server has gone away in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(Object(mysqli), 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(655): Core\Model->query(Object(mysqli), 'SELECT p.produc...')
+#2 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(590): Models\ProductModel->getProductById(11363, 'jewellery')
+#3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
+#4 {main}
+
