@@ -9,23 +9,27 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 // Custom error and exception handlers for API debugging
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-    if (!(error_reporting() & $errno)) return;
-    
+set_error_handler(function ($errno, $errstr, $errfile, $errline) {
+    if (!(error_reporting() & $errno))
+        return;
+
     // Suppress harmless session_start() notices when session is already active
     if (stripos($errstr, 'session_start()') !== false && stripos($errstr, 'already active') !== false) {
         return;
     }
-    
+
     throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
 });
 
-set_exception_handler(function($exception) {
+set_exception_handler(function ($exception) {
     if (!headers_sent()) {
         http_response_code(500);
         header('Content-Type: application/json');
+        header("Cache-Control: no-cache, no-store, must-revalidate, max-age=0");
+        header("Pragma: no-cache");
+        header("Expires: 0");
     }
-    
+
     $errorResponse = [
         'status' => 'error',
         'message' => $exception->getMessage(),
@@ -33,11 +37,11 @@ set_exception_handler(function($exception) {
         'line' => $exception->getLine(),
         'trace' => explode("\n", $exception->getTraceAsString())
     ];
-    
+
     // Log to a file on the server
     $logMsg = date("Y-m-d H:i:s") . " [ERROR] " . $exception->getMessage() . " in " . $exception->getFile() . " on line " . $exception->getLine() . "\n" . $exception->getTraceAsString() . "\n\n";
     file_put_contents(__DIR__ . "/api_error_log.txt", $logMsg, FILE_APPEND);
-    
+
     echo json_encode($errorResponse, JSON_PRETTY_PRINT);
     exit;
 });
@@ -51,18 +55,24 @@ if (!headers_sent()) {
 date_default_timezone_set('Asia/Kolkata');
 global $con, $conn, $con3, $con_reporting;
 
-$is_local = isset($_SERVER['HTTP_HOST']) && (in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1', '::1']) || strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0);
+$is_local = php_sapi_name() === 'cli' || !isset($_SERVER['HTTP_HOST']) || (in_array($_SERVER['HTTP_HOST'], ['localhost', '127.0.0.1', '::1']) || strpos($_SERVER['HTTP_HOST'], 'localhost:') === 0);
+
+// Disable automatic mysqli exception/warning throwing to prevent set_error_handler from crashing on connection attempts
+mysqli_report(MYSQLI_REPORT_OFF);
 
 if ($is_local) {
-    $con = mysqli_connect("localhost", "root", "", "u464193275_srishrinjewels");
-    $conn = mysqli_connect("localhost", "root", "", "u464193275_srishrinjewels");
-    $con3 = mysqli_connect("localhost", "root", "", "u464193275_srishringarr");
-    $con_reporting = mysqli_connect("localhost", "root", "", "u464193275_reporting");
+    $con = @mysqli_connect("localhost", "root", "", "u464193275_srishrinjewels");
+    $conn = $con;
+    $con3 = @mysqli_connect("localhost", "root", "", "u464193275_srishringarr");
+    $con_reporting = @mysqli_connect("localhost", "root", "", "u464193275_reporting");
 } else {
-    $con = mysqli_connect("localhost", "u464193275_srishrinjuser", "9b@hMgk!=zI", "u464193275_srishrinjewels");
-    $conn = mysqli_connect("localhost", "u464193275_srishrinjuser", "9b@hMgk!=zI", "u464193275_srishrinjewels");
-    $con3 = mysqli_connect("localhost", "u464193275_sarmicropos", "Mypos1234", "u464193275_srishringarr");
-    $con_reporting = mysqli_connect("localhost", "u464193275_reporting", "AVav@@2026", "u464193275_reporting");
+    // Hostinger requires 'localhost' for MySQL user grants
+    $con = @mysqli_connect("localhost", "u464193275_srishrinjuser", "9b@hMgk!=zI", "u464193275_srishrinjewels");
+    $conn = $con;
+
+    // Secondary DBs initialized lazily or with fallback so they never crash main product APIs
+    $con3 = null;
+    $con_reporting = null;
 }
 $pathmain = "";
 
@@ -81,7 +91,7 @@ if ($con) {
         setting_value TEXT NOT NULL,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     ) ENGINE=InnoDB");
-    
+
     $rzp_res = mysqli_query($con, "SELECT setting_key, setting_value FROM site_settings WHERE setting_key LIKE 'razorpay_%'");
     if ($rzp_res) {
         while ($r = mysqli_fetch_assoc($rzp_res)) {
@@ -106,13 +116,18 @@ if ($con) {
 $razorpay_mode = strtolower($rzp_defaults['razorpay_mode'] ?? 'test');
 
 if ($razorpay_mode === 'live') {
-    define('RAZORPAY_KEY_ID', $rzp_defaults['razorpay_live_key_id']);
-    define('RAZORPAY_KEY_SECRET', $rzp_defaults['razorpay_live_key_secret']);
+    if (!defined('RAZORPAY_KEY_ID'))
+        define('RAZORPAY_KEY_ID', $rzp_defaults['razorpay_live_key_id']);
+    if (!defined('RAZORPAY_KEY_SECRET'))
+        define('RAZORPAY_KEY_SECRET', $rzp_defaults['razorpay_live_key_secret']);
 } else {
-    define('RAZORPAY_KEY_ID', $rzp_defaults['razorpay_test_key_id']);
-    define('RAZORPAY_KEY_SECRET', $rzp_defaults['razorpay_test_key_secret']);
+    if (!defined('RAZORPAY_KEY_ID'))
+        define('RAZORPAY_KEY_ID', $rzp_defaults['razorpay_test_key_id']);
+    if (!defined('RAZORPAY_KEY_SECRET'))
+        define('RAZORPAY_KEY_SECRET', $rzp_defaults['razorpay_test_key_secret']);
 }
-define('RAZORPAY_MODE', $razorpay_mode);
+if (!defined('RAZORPAY_MODE'))
+    define('RAZORPAY_MODE', $razorpay_mode);
 // ----------------------------------------
 
 
@@ -122,7 +137,7 @@ $currency = $_SESSION['cur'] ?? ($_SESSION['cur'] = 'INR');
 // Check if gid is set
 if (!isset($_SESSION['gid'])) {
     $query = "INSERT INTO `Registration`(`Firstname`) VALUES ('')";
-    if (mysqli_query($con, $query)) {
+    if ($con && mysqli_query($con, $query)) {
         $_SESSION['gid'] = mysqli_insert_id($con);
     } else {
         // Silently fail for API requests — gid is only needed for cart

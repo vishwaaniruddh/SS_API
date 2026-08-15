@@ -241,3 +241,140 @@
 #3 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->saveAiImage()
 #4 {main}
 
+2026-07-31 20:10:44 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\config.php on line 134
+#0 C:\xampp\htdocs\ss\API\config.php(134): mysqli_query(false, 'INSERT INTO `Re...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(14): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\xampp\htdocs\ss\new_admin\scratch\check_k332c.php(13): Core\Model->__construct()
+#4 {main}
+
+2026-07-31 20:10:57 [ERROR] Cannot access protected property Models\ProductModel::$db in C:\xampp\htdocs\ss\new_admin\scratch\check_k332c.php on line 18
+#0 {main}
+
+2026-07-31 22:04:21 [ERROR] syntax error, unexpected token "endif", expecting end of file in C:\xampp\htdocs\ss\new_admin\Views\products\edit2.php on line 689
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(876): Core\Controller->view('products/edit2', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit2()
+#2 {main}
+
+2026-07-31 22:05:14 [ERROR] syntax error, unexpected token "endif", expecting end of file in C:\xampp\htdocs\ss\new_admin\Views\products\edit2.php on line 682
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(876): Core\Controller->view('products/edit2', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit2()
+#2 {main}
+
+2026-07-31 22:05:15 [ERROR] syntax error, unexpected token "endif", expecting end of file in C:\xampp\htdocs\ss\new_admin\Views\products\edit2.php on line 682
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(876): Core\Controller->view('products/edit2', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit2()
+#2 {main}
+
+2026-07-31 22:05:33 [ERROR] syntax error, unexpected token "endif", expecting end of file in C:\xampp\htdocs\ss\new_admin\Views\products\edit2.php on line 682
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(876): Core\Controller->view('products/edit2', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit2()
+#2 {main}
+
+2026-07-31 22:05:34 [ERROR] syntax error, unexpected token "endif", expecting end of file in C:\xampp\htdocs\ss\new_admin\Views\products\edit2.php on line 682
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(876): Core\Controller->view('products/edit2', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit2()
+#2 {main}
+
+2026-08-03 19:46:06 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\config.php on line 134
+#0 C:\xampp\htdocs\ss\API\config.php(134): mysqli_query(false, 'INSERT INTO `Re...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(14): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\scratch\test_ai_sku.php(11): Core\Database::getConnection('con')
+#3 {main}
+
+2026-08-03 20:51:56 [ERROR] syntax error, unexpected end of file, expecting "elseif" or "else" or "endif" in C:\xampp\htdocs\ss\new_admin\Views\products\edit.php on line 1497
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(836): Core\Controller->view('products/edit', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit()
+#2 {main}
+
+2026-08-03 20:52:00 [ERROR] syntax error, unexpected end of file, expecting "elseif" or "else" or "endif" in C:\xampp\htdocs\ss\new_admin\Views\products\edit.php on line 1497
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(836): Core\Controller->view('products/edit', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit()
+#2 {main}
+
+2026-08-03 20:52:00 [ERROR] syntax error, unexpected end of file, expecting "elseif" or "else" or "endif" in C:\xampp\htdocs\ss\new_admin\Views\products\edit.php on line 1497
+#0 C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php(836): Core\Controller->view('products/edit', Array)
+#1 C:\xampp\htdocs\ss\new_admin\index.php(46): Controllers\ProductController->edit()
+#2 {main}
+
+2026-08-03 20:55:23 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\config.php on line 134
+#0 C:\xampp\htdocs\ss\API\config.php(134): mysqli_query(false, 'INSERT INTO `Re...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(14): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\Users\aniru\.gemini\antigravity-ide\brain\278a020f-22be-41dd-ac67-08dac92dd625\scratch\test_sync.php(14): Core\Model->__construct()
+#4 {main}
+
+2026-08-03 20:58:05 [ERROR] Call to a member function prepare() on false in C:\xampp\htdocs\ss\API\tracking.php on line 41
+#0 C:\xampp\htdocs\ss\API\config.php(149): logSiteAccess(false)
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(14): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\Users\aniru\.gemini\antigravity-ide\brain\278a020f-22be-41dd-ac67-08dac92dd625\scratch\test_sync.php(14): Core\Model->__construct()
+#4 {main}
+
+2026-08-03 20:58:48 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\config.php on line 140
+#0 C:\xampp\htdocs\ss\API\config.php(140): mysqli_query(false, 'INSERT INTO `Re...')
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(14): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\Users\aniru\.gemini\antigravity-ide\brain\278a020f-22be-41dd-ac67-08dac92dd625\scratch\test_sync.php(14): Core\Model->__construct()
+#4 {main}
+
+2026-08-03 20:59:04 [ERROR] Call to a member function prepare() on false in C:\xampp\htdocs\ss\API\tracking.php on line 42
+#0 C:\xampp\htdocs\ss\API\config.php(155): logSiteAccess(false)
+#1 C:\xampp\htdocs\ss\new_admin\Core\Database.php(14): require_once('C:\\xampp\\htdocs...')
+#2 C:\xampp\htdocs\ss\new_admin\Core\Model.php(9): Core\Database::getConnection('con')
+#3 C:\Users\aniru\.gemini\antigravity-ide\brain\278a020f-22be-41dd-ac67-08dac92dd625\scratch\test_sync.php(14): Core\Model->__construct()
+#4 {main}
+
+2026-08-03 20:59:22 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in C:\xampp\htdocs\ss\new_admin\Core\Model.php on line 14
+#0 C:\xampp\htdocs\ss\new_admin\Core\Model.php(14): mysqli_query(NULL, 'SELECT p.produc...')
+#1 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(843): Core\Model->query(NULL, 'SELECT p.produc...')
+#2 C:\Users\aniru\.gemini\antigravity-ide\brain\278a020f-22be-41dd-ac67-08dac92dd625\scratch\test_sync.php(15): Models\ProductModel->getProductById(3066, 'jewellery')
+#3 {main}
+
+2026-08-03 21:00:26 [ERROR] Call to private method Models\ProductModel::getProductDetails() from global scope in C:\xampp\htdocs\ss\new_admin\scratch\test_price_resolution.php on line 40
+#0 {main}
+
+2026-08-03 21:08:29 [ERROR] Function imagedestroy() is deprecated since 8.5, as it has no effect since PHP 8.0 in C:\xampp\htdocs\ss\new_admin\scratch\test_image_copy.php on line 101
+#0 C:\xampp\htdocs\ss\new_admin\scratch\test_image_copy.php(101): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(8192, 'Function imaged...', 'C:\\xampp\\htdocs...', 101)
+#1 {main}
+
+2026-08-03 21:35:41 [ERROR] Undefined array key "availability" in C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php on line 882
+#0 C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php(882): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(2, 'Undefined array...', 'C:\\xampp\\htdocs...', 882)
+#1 C:\xampp\htdocs\ss\new_admin\scratch\test_auto_sync_trigger.php(33): Models\ProductModel->updateProduct(11433, 0, Array)
+#2 {main}
+
+2026-08-04 21:19:07 [ERROR] Call to undefined method Models\ProductModel::getAllProducts() in C:\Users\aniru\.gemini\antigravity-ide\brain\5ff1dce9-b860-48cf-9b5a-ef5adf492d6d\scratch\test_product.php on line 12
+#0 {main}
+
+2026-08-04 21:19:17 [ERROR] Method ReflectionMethod::setAccessible() is deprecated since 8.5, as it has no effect since PHP 8.1 in C:\Users\aniru\.gemini\antigravity-ide\brain\5ff1dce9-b860-48cf-9b5a-ef5adf492d6d\scratch\test_product.php on line 14
+#0 C:\Users\aniru\.gemini\antigravity-ide\brain\5ff1dce9-b860-48cf-9b5a-ef5adf492d6d\scratch\test_product.php(14): Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(8192, 'Method Reflecti...', 'C:\\Users\\aniru\\...', 14)
+#1 {main}
+
+2026-08-04 21:21:28 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, null given in C:\Users\aniru\.gemini\antigravity-ide\brain\5ff1dce9-b860-48cf-9b5a-ef5adf492d6d\scratch\test_product.php on line 12
+#0 C:\Users\aniru\.gemini\antigravity-ide\brain\5ff1dce9-b860-48cf-9b5a-ef5adf492d6d\scratch\test_product.php(12): mysqli_query(NULL, 'SELECT * FROM p...')
+#1 {main}
+
+2026-08-04 21:37:23 [ERROR] Class "Core\Controller" not found in C:\xampp\htdocs\ss\new_admin\Controllers\ProductController.php on line 7
+#0 C:\Users\aniru\.gemini\antigravity-ide\brain\5ff1dce9-b860-48cf-9b5a-ef5adf492d6d\scratch\test_product.php(184): require_once()
+#1 {main}
+
+2026-08-06 19:33:31 [ERROR] syntax error, unexpected token "catch" in C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php on line 995
+#0 C:\xampp\htdocs\ss\new_admin\scratch\test_autofix_ss.php(13): {closure:C:\xampp\htdocs\ss\new_admin\scratch\test_autofix_ss.php:2}('Models\\ProductM...')
+#1 {main}
+
+2026-08-06 19:33:48 [ERROR] syntax error, unexpected token "catch" in C:\xampp\htdocs\ss\new_admin\Models\ProductModel.php on line 1223
+#0 C:\xampp\htdocs\ss\new_admin\scratch\test_autofix_ss.php(13): {closure:C:\xampp\htdocs\ss\new_admin\scratch\test_autofix_ss.php:2}('Models\\ProductM...')
+#1 {main}
+
+2026-08-15 19:32:18 [ERROR] mysqli_real_escape_string(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\v1\track-event.php on line 35
+#0 C:\xampp\htdocs\ss\API\v1\track-event.php(35): mysqli_real_escape_string(false, 'category_view')
+#1 {main}
+
+2026-08-15 19:32:22 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\Core\Model.php on line 16
+#0 C:\xampp\htdocs\ss\API\Core\Model.php(16): mysqli_query(false, '\r\n            (...')
+#1 C:\xampp\htdocs\ss\API\Models\ProductModel.php(76): API\Core\Model->query(false, '\r\n            (...')
+#2 C:\xampp\htdocs\ss\API\Services\ProductService.php(14): API\Models\ProductModel->getProducts(Array)
+#3 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(28): API\Services\ProductService->fetchProducts(Array)
+#4 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
+#5 {main}
+

@@ -48,13 +48,13 @@ class ProductModel extends Model {
                 list($type, $id) = explode(':', $category_param);
                 $id = (int)$id;
                 if ($type === 'garment') {
-                    $garments_search .= " AND (gp.garment_id = $id OR gp.product_for = $id)";
+                    $garments_search .= " AND (gp.garment_id = $id OR gp.product_for = $id OR EXISTS (SELECT 1 FROM product_categories pc WHERE pc.product_id = gp.gproduct_id AND pc.product_type = 'garments' AND (pc.category_id = $id OR pc.subcategory_id = $id OR pc.legacy_category_id = $id OR pc.legacy_subcategory_id = $id)))";
                     $jewellery_search .= " AND 1=0";
-                } elseif ($type === 'jewel_main') {
-                    $jewellery_search .= " AND p.categories_id = $id";
+                } elseif ($type === 'jewel_main' || $type === 'jewel_parent') {
+                    $jewellery_search .= " AND (p.categories_id = $id OR EXISTS (SELECT 1 FROM product_categories pc WHERE pc.product_id = p.product_id AND pc.product_type = 'jewellery' AND (pc.category_id = $id OR pc.legacy_category_id = $id OR pc.legacy_subcategory_id IN (SELECT subcat_id FROM subcat1 WHERE maincat_id = $id))))";
                     $garments_search .= " AND 1=0";
-                } elseif ($type === 'jewel_sub') {
-                    $jewellery_search .= " AND p.subcat_id = $id";
+                } elseif ($type === 'jewel_sub' || $type === 'jewel_child') {
+                    $jewellery_search .= " AND (p.subcat_id = $id OR EXISTS (SELECT 1 FROM product_categories pc WHERE pc.product_id = p.product_id AND pc.product_type = 'jewellery' AND (pc.subcategory_id = $id OR pc.legacy_subcategory_id = $id OR pc.category_id = $id OR pc.legacy_category_id = $id)))";
                     $garments_search .= " AND 1=0";
                 }
             }
@@ -160,11 +160,11 @@ class ProductModel extends Model {
         }
 
         // Apply PHP Sorting for Price
-        if ($sort === 'price_low') {
+        if ($sort === 'price_low' || $sort === 'price_asc') {
             usort($filteredProducts, function($a, $b) {
                 return $a['details']['rent_price'] <=> $b['details']['rent_price'];
             });
-        } elseif ($sort === 'price_high') {
+        } elseif ($sort === 'price_high' || $sort === 'price_desc') {
             usort($filteredProducts, function($a, $b) {
                 return $b['details']['rent_price'] <=> $a['details']['rent_price'];
             });
