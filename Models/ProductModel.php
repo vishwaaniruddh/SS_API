@@ -60,6 +60,13 @@ class ProductModel extends Model {
             }
         }
 
+        $color_param = $params['color'] ?? $params['colors'] ?? '';
+        if (!empty($color_param)) {
+            $colorEsc = mysqli_real_escape_string($this->db, trim($color_param));
+            $jewellery_search .= " AND p.brand_color LIKE '%$colorEsc%'";
+            $garments_search .= " AND gp.brand_color LIKE '%$colorEsc%'";
+        }
+
         $sort = $params['sort'] ?? 'sku_desc';
         $orderBy = "CAST(REGEXP_REPLACE(code, '[^0-9]', '') AS UNSIGNED) DESC";
         
@@ -68,9 +75,9 @@ class ProductModel extends Model {
         }
 
         $query = "
-            (SELECT p.product_id as id, p.product_name as name, p.product_code as code, 'jewellery' as type, p.sales_price as original_sales_price, p.rent_price as db_rent_price, p.deposit as db_deposit, p.price_source, p.availability, p.brand_name, p.size_avail FROM product p WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = p.product_code AND pin.product_id = p.product_id) $jewellery_search)
+            (SELECT p.product_id as id, p.product_name as name, p.product_code as code, 'jewellery' as type, p.sales_price as original_sales_price, p.rent_price as db_rent_price, p.deposit as db_deposit, p.price_source, p.availability, p.brand_name, p.size_avail, p.brand_color FROM product p WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = p.product_code AND pin.product_id = p.product_id) $jewellery_search)
             UNION ALL
-            (SELECT gp.gproduct_id as id, gp.gproduct_name as name, gp.gproduct_code as code, 'garments' as type, gp.sales_price as original_sales_price, gp.rent_price as db_rent_price, gp.deposit as db_deposit, gp.price_source, gp.availability, gp.brand_name, gp.size_avail FROM garment_product gp WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = gp.gproduct_code AND pin.gproduct_id = gp.gproduct_id) $garments_search)
+            (SELECT gp.gproduct_id as id, gp.gproduct_name as name, gp.gproduct_code as code, 'garments' as type, gp.sales_price as original_sales_price, gp.rent_price as db_rent_price, gp.deposit as db_deposit, gp.price_source, gp.availability, gp.brand_name, gp.size_avail, gp.brand_color FROM garment_product gp WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = gp.gproduct_code AND pin.gproduct_id = gp.gproduct_id) $garments_search)
             ORDER BY $orderBy";
 
         $result = $this->query($this->db, $query);
@@ -136,6 +143,7 @@ class ProductModel extends Model {
             $comm_amt = $commissions[$lowerSku] ?? 0;
             $img_name = $productImages[$lowerSku] ?? null;
             
+            $product['colors'] = $this->parseColors($product['brand_color'] ?? '');
             $product['details'] = $this->calculateDetailsWithBatchData($product, $pos_item, $comm_amt, $img_name);
             
             // Apply Discounts
@@ -418,13 +426,14 @@ class ProductModel extends Model {
         
         $cat_field = ($type === 'jewellery') ? 'subcat_id as cat_id' : 'product_for as cat_id';
 
-        $query = "SELECT $id_field as id, $product_desc as product_desc, $name_field as name, $code_field as code, sales_price as original_sales_price, rent_price as db_rent_price, deposit as db_deposit, price_source, availability, brand_name, size_avail, $cat_field 
+        $query = "SELECT $id_field as id, $product_desc as product_desc, $name_field as name, $code_field as code, sales_price as original_sales_price, rent_price as db_rent_price, deposit as db_deposit, price_source, availability, brand_name, size_avail, brand_color, $cat_field 
                   FROM $table WHERE $id_field = $id";
         $result = $this->query($this->db, $query);
         $product = $this->fetchOne($result);
 
         if ($product) {
             $product['type'] = $type;
+            $product['colors'] = $this->parseColors($product['brand_color'] ?? '');
             $product['details'] = $this->getProductDetails($product);
             
             // Get all images
@@ -466,5 +475,26 @@ class ProductModel extends Model {
         }
 
         return null;
+    }
+
+    public function parseColors($rawColor) {
+        $colors = [];
+        if (!empty($rawColor)) {
+            $rawColor = trim($rawColor);
+            $decoded = json_decode($rawColor, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                $colors = $decoded;
+            } else if (str_starts_with($rawColor, '[') && str_ends_with($rawColor, ']')) {
+                $decoded = json_decode(stripslashes($rawColor), true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                    $colors = $decoded;
+                }
+            } else {
+                $colors = array_filter(array_map('trim', explode(',', $rawColor)));
+            }
+        }
+        return array_values(array_unique(array_filter(array_map(function($c) {
+            return trim(strip_tags((string)$c));
+        }, $colors))));
     }
 }

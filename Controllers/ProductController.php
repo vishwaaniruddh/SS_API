@@ -21,7 +21,8 @@ class ProductController extends Controller {
             'max_price' => isset($_GET['max_price']) ? (float)$_GET['max_price'] : 1000000,
             'featured' => isset($_GET['featured']) ? (bool)$_GET['featured'] : false,
             'sort' => isset($_GET['sort']) ? $_GET['sort'] : 'sku_desc',
-            'type' => isset($_GET['type']) ? $_GET['type'] : ''
+            'type' => isset($_GET['type']) ? $_GET['type'] : '',
+            'color' => isset($_GET['color']) ? $_GET['color'] : (isset($_GET['colors']) ? $_GET['colors'] : '')
         ];
 
         try {

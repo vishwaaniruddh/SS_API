@@ -378,3 +378,16 @@
 #4 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
 #5 {main}
 
+2026-08-17 18:05:12 [ERROR] Class "API\Core\Database" not found in C:\xampp\htdocs\ss\API\Core\Model.php on line 10
+#0 C:\xampp\htdocs\ss\API\Models\ProductModel.php(11): API\Core\Model->__construct()
+#1 C:\xampp\htdocs\ss\new_admin\scratch\test_api_colors.php(7): API\Models\ProductModel->__construct()
+#2 {main}
+
+2026-08-17 18:25:24 [ERROR] http_response_code(): Cannot set response code - headers already sent (output started at C:\xampp\htdocs\ss\new_admin\scratch\test_api_endpoints.php:2) in C:\xampp\htdocs\ss\API\Core\Controller.php on line 6
+#0 [internal function]: API\Core\Database::{closure:C:\xampp\htdocs\ss\API\config.php:12}(2, 'http_response_c...', 'C:\\xampp\\htdocs...', 6)
+#1 C:\xampp\htdocs\ss\API\Core\Controller.php(6): http_response_code(500)
+#2 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(36): API\Core\Controller->json(Array, 500)
+#3 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
+#4 C:\xampp\htdocs\ss\new_admin\scratch\test_api_endpoints.php(16): require('C:\\xampp\\htdocs...')
+#5 {main}
+
