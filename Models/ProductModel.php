@@ -166,20 +166,11 @@ class ProductModel extends Model {
             $this->discountService->applyDiscounts($product);
             
             $price = $product['details']['rent_price'];
-            
-            $priceSource = $product['price_source'] ?? 'pos';
             $quantity = (int)($pos_item['quantity'] ?? 0);
             
-            // Manual-priced products always show (bypass POS inventory check)
-            // POS-priced products require quantity > 0
-            if ($priceSource === 'manual') {
-                if ($price >= $minPrice && $price <= $maxPrice) {
-                    $filteredProducts[] = $product;
-                }
-            } else {
-                if ($quantity > 0 && $price >= $minPrice && $price <= $maxPrice) {
-                    $filteredProducts[] = $product;
-                }
+            // Only show products that are currently in stock (quantity > 0 in POS)
+            if ($quantity > 0 && $price >= $minPrice && $price <= $maxPrice) {
+                $filteredProducts[] = $product;
             }
         }
 

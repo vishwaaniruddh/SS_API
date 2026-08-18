@@ -391,3 +391,6 @@
 #4 C:\xampp\htdocs\ss\new_admin\scratch\test_api_endpoints.php(16): require('C:\\xampp\\htdocs...')
 #5 {main}
 
+2026-08-18 21:05:57 [ERROR] Class "API\Models\ProductModel" not found in C:\xampp\htdocs\ss\scratch\test_api_fm4539.php on line 5
+#0 {main}
+
