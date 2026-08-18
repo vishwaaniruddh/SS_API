@@ -2,3 +2,5 @@ connection_log.txt
 *.log
 .DS_Store
 Thumbs.db
+cache/
+cache/*
