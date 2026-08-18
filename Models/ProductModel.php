@@ -114,6 +114,7 @@ class ProductModel extends Model {
 
         // Batch Images
         $productImages = [];
+        $productAllImages = [];
         $clauses = [];
         foreach ($allProducts as $p) {
             $sku = mysqli_real_escape_string($this->db, $p['code']);
@@ -128,8 +129,15 @@ class ProductModel extends Model {
             while ($row = $this->fetchOne($res)) { 
                 $sku = $row['pro_code'];
                 $lowerSku = strtolower($sku);
+                $fullImg = "https://srishringarr.com/yn/uploads/" . ltrim($row['img_name'], '/');
                 if (!isset($productImages[$lowerSku])) {
                     $productImages[$lowerSku] = $row['img_name']; 
+                }
+                if (!isset($productAllImages[$lowerSku])) {
+                    $productAllImages[$lowerSku] = [];
+                }
+                if (!in_array($fullImg, $productAllImages[$lowerSku])) {
+                    $productAllImages[$lowerSku][] = $fullImg;
                 }
             }
         }
@@ -142,6 +150,14 @@ class ProductModel extends Model {
             $pos_item = $posItems[$lowerSku] ?? null;
             $comm_amt = $commissions[$lowerSku] ?? 0;
             $img_name = $productImages[$lowerSku] ?? null;
+            
+            $product['images'] = $productAllImages[$lowerSku] ?? [];
+            if (empty($product['images']) && $img_name) {
+                $product['images'][] = "https://srishringarr.com/yn/uploads/" . ltrim($img_name, '/');
+            }
+            if (empty($product['images'])) {
+                $product['images'][] = 'https://srishringarr.com/static/images/default.jpg';
+            }
             
             $product['colors'] = $this->parseColors($product['brand_color'] ?? '');
             $product['details'] = $this->calculateDetailsWithBatchData($product, $pos_item, $comm_amt, $img_name);
