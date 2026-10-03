@@ -1,4 +1,5 @@
 connection_log.txt
+api_error_log.txt
 *.log
 .DS_Store
 Thumbs.db
