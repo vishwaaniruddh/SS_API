@@ -394,3 +394,39 @@
 2026-08-18 21:05:57 [ERROR] Class "API\Models\ProductModel" not found in C:\xampp\htdocs\ss\scratch\test_api_fm4539.php on line 5
 #0 {main}
 
+2026-08-27 01:09:13 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\Core\Model.php on line 16
+#0 C:\xampp\htdocs\ss\API\Core\Model.php(16): mysqli_query(false, '\r\n            (...')
+#1 C:\xampp\htdocs\ss\API\Models\ProductModel.php(83): API\Core\Model->query(false, '\r\n            (...')
+#2 C:\xampp\htdocs\ss\API\Services\ProductService.php(14): API\Models\ProductModel->getProducts(Array)
+#3 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(29): API\Services\ProductService->fetchProducts(Array)
+#4 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
+#5 {main}
+
+2026-08-27 01:09:16 [ERROR] mysqli_real_escape_string(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\v1\track-event.php on line 35
+#0 C:\xampp\htdocs\ss\API\v1\track-event.php(35): mysqli_real_escape_string(false, 'category_view')
+#1 {main}
+
+2026-08-27 01:09:22 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\Core\Model.php on line 16
+#0 C:\xampp\htdocs\ss\API\Core\Model.php(16): mysqli_query(false, '\r\n            (...')
+#1 C:\xampp\htdocs\ss\API\Models\ProductModel.php(83): API\Core\Model->query(false, '\r\n            (...')
+#2 C:\xampp\htdocs\ss\API\Services\ProductService.php(14): API\Models\ProductModel->getProducts(Array)
+#3 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(29): API\Services\ProductService->fetchProducts(Array)
+#4 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
+#5 {main}
+
+2026-08-27 01:09:22 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\Core\Model.php on line 16
+#0 C:\xampp\htdocs\ss\API\Core\Model.php(16): mysqli_query(false, '\r\n            (...')
+#1 C:\xampp\htdocs\ss\API\Models\ProductModel.php(83): API\Core\Model->query(false, '\r\n            (...')
+#2 C:\xampp\htdocs\ss\API\Services\ProductService.php(14): API\Models\ProductModel->getProducts(Array)
+#3 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(29): API\Services\ProductService->fetchProducts(Array)
+#4 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
+#5 {main}
+
+2026-08-27 01:09:22 [ERROR] mysqli_query(): Argument #1 ($mysql) must be of type mysqli, false given in C:\xampp\htdocs\ss\API\Core\Model.php on line 16
+#0 C:\xampp\htdocs\ss\API\Core\Model.php(16): mysqli_query(false, '\r\n            (...')
+#1 C:\xampp\htdocs\ss\API\Models\ProductModel.php(83): API\Core\Model->query(false, '\r\n            (...')
+#2 C:\xampp\htdocs\ss\API\Services\ProductService.php(14): API\Models\ProductModel->getProducts(Array)
+#3 C:\xampp\htdocs\ss\API\Controllers\ProductController.php(29): API\Services\ProductService->fetchProducts(Array)
+#4 C:\xampp\htdocs\ss\API\v1\products.php(11): API\Controllers\ProductController->products()
+#5 {main}
+

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 // --- Razorpay Configuration initialized dynamically after DB connection ---
 
