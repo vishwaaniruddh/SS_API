@@ -98,9 +98,9 @@ class ProductModel extends Model {
         }
 
         $query = "
-            (SELECT p.product_id as id, p.product_name as name, p.product_code as code, 'jewellery' as type, p.sales_price as original_sales_price, p.rent_price as db_rent_price, p.deposit as db_deposit, p.price_source, p.availability, p.brand_name, p.size_avail, p.brand_color FROM product p WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = p.product_code AND pin.product_id = p.product_id) $jewellery_search)
+            (SELECT p.product_id as id, p.product_name as name, p.product_code as code, 'jewellery' as type, p.sales_price as original_sales_price, p.rent_price as db_rent_price, p.deposit as db_deposit, p.price_source, p.availability, p.brand_name, p.size_avail, p.brand_color, p.product_image as main_image FROM product p WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = p.product_code AND pin.product_id = p.product_id) $jewellery_search)
             UNION ALL
-            (SELECT gp.gproduct_id as id, gp.gproduct_name as name, gp.gproduct_code as code, 'garments' as type, gp.sales_price as original_sales_price, gp.rent_price as db_rent_price, gp.deposit as db_deposit, gp.price_source, gp.availability, gp.brand_name, gp.size_avail, gp.brand_color FROM garment_product gp WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = gp.gproduct_code AND pin.gproduct_id = gp.gproduct_id) $garments_search)
+            (SELECT gp.gproduct_id as id, gp.gproduct_name as name, gp.gproduct_code as code, 'garments' as type, gp.sales_price as original_sales_price, gp.rent_price as db_rent_price, gp.deposit as db_deposit, gp.price_source, gp.availability, gp.brand_name, gp.size_avail, gp.brand_color, gp.gproduct_image as main_image FROM garment_product gp WHERE 1=1 AND EXISTS (SELECT 1 FROM product_images_new pin WHERE pin.pro_code = gp.gproduct_code AND pin.gproduct_id = gp.gproduct_id) $garments_search)
             ORDER BY $orderBy";
 
         $result = $this->query($this->db, $query);
@@ -138,29 +138,69 @@ class ProductModel extends Model {
         // Batch Images
         $productImages = [];
         $productAllImages = [];
+        $productMainImages = [];
         $clauses = [];
         foreach ($allProducts as $p) {
             $sku = mysqli_real_escape_string($this->db, $p['code']);
             $id = (int)$p['id'];
             $img_field = ($p['type'] === 'jewellery') ? 'product_id' : 'gproduct_id';
             $clauses[] = "(pro_code = '$sku' AND $img_field = $id)";
+            $productMainImages[strtolower($p['code'])] = trim($p['main_image'] ?? '', '/');
         }
         
         if (!empty($clauses)) {
-            $img_query = "SELECT pro_code, img_name FROM product_images_new WHERE " . implode(' OR ', $clauses) . " ORDER BY rank ASC";
+            $img_query = "SELECT pro_code, img_name, rank, id FROM product_images_new WHERE " . implode(' OR ', $clauses) . " ORDER BY rank ASC, id ASC";
             $res = $this->query($this->db, $img_query);
+            $rawImagesBySku = [];
             while ($row = $this->fetchOne($res)) { 
-                $sku = $row['pro_code'];
-                $lowerSku = strtolower($sku);
-                $fullImg = "https://srishringarr.com/yn/uploads/" . ltrim($row['img_name'], '/');
-                if (!isset($productImages[$lowerSku])) {
-                    $productImages[$lowerSku] = $row['img_name']; 
+                $lowerSku = strtolower($row['pro_code']);
+                $rawImagesBySku[$lowerSku][] = $row;
+            }
+
+            foreach ($rawImagesBySku as $lowerSku => $rows) {
+                $targetMain = $productMainImages[$lowerSku] ?? '';
+                // Sort so that the image matching targetMain is strictly first
+                usort($rows, function($a, $b) use ($targetMain) {
+                    $aClean = trim($a['img_name'] ?? '', '/');
+                    $bClean = trim($b['img_name'] ?? '', '/');
+                    $aIsMain = (!empty($targetMain) && $aClean === $targetMain) ? 1 : 0;
+                    $bIsMain = (!empty($targetMain) && $bClean === $targetMain) ? 1 : 0;
+                    if ($aIsMain !== $bIsMain) {
+                        return $bIsMain <=> $aIsMain;
+                    }
+                    $rA = (int)($a['rank'] ?? 0);
+                    $rB = (int)($b['rank'] ?? 0);
+                    if ($rA !== $rB) {
+                        return $rA <=> $rB;
+                    }
+                    return ((int)($a['id'] ?? 0)) <=> ((int)($b['id'] ?? 0));
+                });
+
+                $productAllImages[$lowerSku] = [];
+                foreach ($rows as $r) {
+                    $fullImg = "https://srishringarr.com/yn/uploads/" . ltrim($r['img_name'], '/');
+                    if (!isset($productImages[$lowerSku])) {
+                        $productImages[$lowerSku] = $r['img_name']; 
+                    }
+                    if (!in_array($fullImg, $productAllImages[$lowerSku])) {
+                        $productAllImages[$lowerSku][] = $fullImg;
+                    }
                 }
-                if (!isset($productAllImages[$lowerSku])) {
-                    $productAllImages[$lowerSku] = [];
-                }
-                if (!in_array($fullImg, $productAllImages[$lowerSku])) {
-                    $productAllImages[$lowerSku][] = $fullImg;
+
+                // If targetMain is specified but wasn't in product_images_new, prepend it
+                if (!empty($targetMain)) {
+                    $mainUrl = "https://srishringarr.com/yn/uploads/" . $targetMain;
+                    $idx = array_search($mainUrl, $productAllImages[$lowerSku]);
+                    if ($idx !== false) {
+                        if ($idx > 0) {
+                            array_splice($productAllImages[$lowerSku], $idx, 1);
+                            array_unshift($productAllImages[$lowerSku], $mainUrl);
+                            $productImages[$lowerSku] = '/' . $targetMain;
+                        }
+                    } else {
+                        array_unshift($productAllImages[$lowerSku], $mainUrl);
+                        $productImages[$lowerSku] = '/' . $targetMain;
+                    }
                 }
             }
         }
@@ -331,10 +371,14 @@ class ProductModel extends Model {
         // Image
         $img_field = ($type === 'jewellery') ? 'product_id' : 'gproduct_id';
         $pid = (int)$product['id'];
-        $img_query = "SELECT img_name FROM product_images_new WHERE pro_code = '$sku' AND $img_field = $pid ORDER BY rank LIMIT 1";
+        $mainImage = trim($product['main_image'] ?? '', '/');
+        $escMain = mysqli_real_escape_string($this->db, $mainImage);
+        $orderClause = !empty($escMain) ? "CASE WHEN TRIM(LEADING '/' FROM img_name) = '$escMain' THEN 0 ELSE 1 END, rank ASC, id ASC" : "rank ASC, id ASC";
+        $img_query = "SELECT img_name FROM product_images_new WHERE pro_code = '$sku' AND $img_field = $pid ORDER BY $orderClause LIMIT 1";
         $img_result = $this->query($this->db, $img_query);
         $img_row = $this->fetchOne($img_result);
-        $image_path = !empty($img_row['img_name']) ? "https://srishringarr.com/yn/uploads/" . ltrim($img_row['img_name'], '/') : 'https://srishringarr.com/static/images/default.jpg';
+        $img_to_use = !empty($img_row['img_name']) ? $img_row['img_name'] : (!empty($mainImage) ? '/' . $mainImage : null);
+        $image_path = !empty($img_to_use) ? "https://srishringarr.com/yn/uploads/" . ltrim($img_to_use, '/') : 'https://srishringarr.com/static/images/default.jpg';
 
         // --- Manual price source: use DB values directly ---
         if ($priceSource === 'manual') {
@@ -455,8 +499,9 @@ class ProductModel extends Model {
         $product_desc = ($type === 'jewellery') ? 'product_desc' : 'gproduct_desc';
         
         $cat_field = ($type === 'jewellery') ? 'subcat_id as cat_id' : 'product_for as cat_id';
+        $img_field_col = ($type === 'jewellery') ? 'product_image' : 'gproduct_image';
 
-        $query = "SELECT $id_field as id, $product_desc as product_desc, $name_field as name, $code_field as code, sales_price as original_sales_price, rent_price as db_rent_price, deposit as db_deposit, price_source, availability, brand_name, size_avail, brand_color, $cat_field 
+        $query = "SELECT $id_field as id, $product_desc as product_desc, $name_field as name, $code_field as code, sales_price as original_sales_price, rent_price as db_rent_price, deposit as db_deposit, price_source, availability, brand_name, size_avail, brand_color, $cat_field, $img_field_col as main_image 
                   FROM $table WHERE $id_field = $id";
         $result = $this->query($this->db, $query);
         $product = $this->fetchOne($result);
@@ -468,11 +513,29 @@ class ProductModel extends Model {
             
             // Get all images
             $sku = $product['code'];
-            $img_query = "SELECT img_name FROM product_images_new WHERE pro_code = '" . mysqli_real_escape_string($this->db, $sku) . "' AND $id_field = $id ORDER BY rank";
+            $mainImage = trim($product['main_image'] ?? '', '/');
+            $escMain = mysqli_real_escape_string($this->db, $mainImage);
+            $orderClause = !empty($escMain) ? "CASE WHEN TRIM(LEADING '/' FROM img_name) = '$escMain' THEN 0 ELSE 1 END, rank ASC, id ASC" : "rank ASC, id ASC";
+            $img_query = "SELECT img_name FROM product_images_new WHERE pro_code = '" . mysqli_real_escape_string($this->db, $sku) . "' AND $id_field = $id ORDER BY $orderClause";
             $img_result = $this->query($this->db, $img_query);
             $product['images'] = [];
             while ($img_row = $this->fetchOne($img_result)) {
-                $product['images'][] = "https://srishringarr.com/yn/uploads/" . ltrim($img_row['img_name'], '/');
+                $fullImg = "https://srishringarr.com/yn/uploads/" . ltrim($img_row['img_name'], '/');
+                if (!in_array($fullImg, $product['images'])) {
+                    $product['images'][] = $fullImg;
+                }
+            }
+            if (!empty($mainImage)) {
+                $mainUrl = "https://srishringarr.com/yn/uploads/" . $mainImage;
+                $idx = array_search($mainUrl, $product['images']);
+                if ($idx !== false) {
+                    if ($idx > 0) {
+                        array_splice($product['images'], $idx, 1);
+                        array_unshift($product['images'], $mainUrl);
+                    }
+                } else {
+                    array_unshift($product['images'], $mainUrl);
+                }
             }
             if (empty($product['images'])) {
                 $product['images'][] = 'https://srishringarr.com/static/images/default.jpg';
