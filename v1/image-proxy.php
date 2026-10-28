@@ -17,6 +17,26 @@ if (empty($url)) {
     exit;
 }
 
+// Check if pre-generated responsive variant exists on disk for zero-latency direct delivery
+if (strpos($url, '/yn/uploads/') !== false || strpos($url, '/uploads/') !== false) {
+    $parsedPath = parse_url($url, PHP_URL_PATH) ?: $url;
+    $cleanPath = ltrim(preg_replace('#^.*?/yn/uploads/#', '', $parsedPath), '/');
+    $dirPart = pathinfo($cleanPath, PATHINFO_DIRNAME);
+    $filePart = pathinfo($cleanPath, PATHINFO_FILENAME);
+    $dirPfx = ($dirPart && $dirPart !== '.') ? ($dirPart . '/') : '';
+
+    $variantSuffix = ($width <= 480) ? '_mobile.webp' : (($width <= 800) ? '_tab.webp' : '_large.webp');
+    $localVariant = __DIR__ . '/../../yn/uploads/' . $dirPfx . $filePart . $variantSuffix;
+
+    if (file_exists($localVariant) && filesize($localVariant) > 0) {
+        header('Content-Type: image/webp');
+        header('Cache-Control: public, max-age=2592000');
+        header('X-Variant: HIT');
+        readfile($localVariant);
+        exit;
+    }
+}
+
 // Create cache directory inside API folder
 $cacheDir = __DIR__ . '/../cache/images';
 if (!is_dir($cacheDir)) {
@@ -36,22 +56,32 @@ if (file_exists($cachePath) && (time() - filemtime($cachePath)) < 604800) {
     exit;
 }
 
-// Download original image
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-$imageData = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+$imageData = null;
+if (!empty($cleanPath)) {
+    $localOrigFile = __DIR__ . '/../../yn/uploads/' . $cleanPath;
+    if (file_exists($localOrigFile) && filesize($localOrigFile) > 0) {
+        $imageData = @file_get_contents($localOrigFile);
+    }
+}
 
-if ($httpCode !== 200 || empty($imageData)) {
-    // Return transparent 1x1 WebP — no error, no console noise
-    header('Content-Type: image/webp');
-    header('Cache-Control: public, max-age=86400');
-    echo base64_decode('UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoBAAEAAkA4JZQCdAEO/hepgAAA/v3Nf/bpf7f/t3uHuHe2f8P/4H/J/6X/W/7L/sP/V/7v/2f+5/8H/y//n/+r/9v////7v/+4AAAA');
-    exit;
+if ($imageData === null || $imageData === false) {
+    // Download original image via cURL fallback
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 8);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    $imageData = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200 || empty($imageData)) {
+        // Return transparent 1x1 WebP — no error, no console noise
+        header('Content-Type: image/webp');
+        header('Cache-Control: public, max-age=86400');
+        echo base64_decode('UklGRlYAAABXRUJQVlA4IEoAAADQAQCdASoBAAEAAkA4JZQCdAEO/hepgAAA/v3Nf/bpf7f/t3uHuHe2f8P/4H/J/6X/W/7L/sP/V/7v/2f+5/8H/y//n/+r/9v////7v/+4AAAA');
+        exit;
+    }
 }
 
 // Convert with GD (if available)
@@ -95,6 +125,6 @@ imagedestroy($src);
 
 // Serve
 header('Content-Type: image/webp');
-header('Cache-Control: public, max-age=2592000');
+header('Cache-Control: public, max-age=31536000, immutable');
 header('X-Cache: MISS');
 readfile($cachePath);
